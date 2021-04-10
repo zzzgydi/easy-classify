@@ -23,7 +23,7 @@ CREATE TABLE model (
 
 
 def init_database():
-    if not os.path.exists(TEMP_DIR):
+    if not os.path.exists(DATA_DIR):
         os.mkdir(DATA_DIR)
     if os.path.exists(DB_PATH):
         return
@@ -33,7 +33,7 @@ def init_database():
 
 
 def init_model_path():
-    if not os.path.exists(TEMP_DIR):
+    if not os.path.exists(DATA_DIR):
         os.mkdir(DATA_DIR)
     if not os.path.exists(TEMP_DIR):
         os.mkdir(TEMP_DIR)
