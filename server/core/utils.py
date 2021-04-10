@@ -7,11 +7,10 @@
 import os
 import re
 
-
-TEMP_DIR = os.path.abspath(os.path.join(
-    os.path.dirname(__file__), '../../data/temp'))
-MODEL_DIR = os.path.abspath(os.path.join(
-    os.path.dirname(__file__), '../../data/model'))
+DATA_DIR = os.path.abspath(os.path.join(
+    os.path.dirname(__file__), '../../data'))
+TEMP_DIR = os.path.join(DATA_DIR, 'temp')
+MODEL_DIR = os.path.join(DATA_DIR, 'model')
 
 
 def get_temp_path(name: str) -> str:

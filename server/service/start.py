@@ -2,7 +2,7 @@
 
 import os
 from core.context import Context, DB_PATH
-from core.utils import TEMP_DIR, MODEL_DIR
+from core.utils import DATA_DIR, TEMP_DIR, MODEL_DIR
 
 sql_def_dataset = '''
 CREATE TABLE dataset (
@@ -23,6 +23,8 @@ CREATE TABLE model (
 
 
 def init_database():
+    if not os.path.exists(TEMP_DIR):
+        os.mkdir(DATA_DIR)
     if os.path.exists(DB_PATH):
         return
     with Context() as ctx:
@@ -31,6 +33,8 @@ def init_database():
 
 
 def init_model_path():
+    if not os.path.exists(TEMP_DIR):
+        os.mkdir(DATA_DIR)
     if not os.path.exists(TEMP_DIR):
         os.mkdir(TEMP_DIR)
     if not os.path.exists(MODEL_DIR):
