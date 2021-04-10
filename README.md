@@ -17,3 +17,11 @@ npm run dev
 # 一个shell跑后端
 python server/app.py
 ```
+
+## Reference
+
+- [fasttext github](https://github.com/facebookresearch/fastText)
+- [jieba github](https://github.com/fxsjy/jieba)
+- [flask document](https://flask.palletsprojects.com/en/1.1.x/)
+- [Vite document](https://vitejs.dev/guide/)
+- [Jotai github](https://github.com/pmndrs/jotai)
