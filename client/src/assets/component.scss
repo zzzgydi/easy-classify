@@ -1,0 +1,71 @@
+// 组件样式
+
+.base-header {
+  width: 100%;
+  height: 50px;
+  padding: 0 20px;
+  box-sizing: border-box;
+  background-color: #ddd;
+  box-shadow: 1px 1px 12px 6px rgba(0, 0, 0, 0.05);
+
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  > a {
+    color: #1890ff;
+    font-size: 16px;
+    margin-left: 16px;
+
+    &:hover {
+      color: #2f54eb;
+      text-decoration: underline;
+    }
+  }
+}
+
+.console-table {
+  width: 100%;
+  min-height: 300px;
+  max-height: 300px;
+  overflow-y: auto;
+  background-color: #fcfcfc;
+
+  .each-result {
+    display: flex;
+    padding: 10px;
+    box-sizing: border-box;
+    border-top: 1px solid #eee;
+
+    > span {
+      font-size: 14px;
+      color: #606266;
+      flex: 0 1 80px;
+    }
+
+    > div {
+      flex: auto;
+    }
+  }
+
+  .each-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+
+    &__idx {
+      margin-right: 1em;
+      color: #909399;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .each-label {
+    .possible {
+      color: #909399;
+    }
+  }
+}
