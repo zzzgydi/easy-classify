@@ -6,6 +6,7 @@
 '''
 import os
 import re
+import datetime
 
 DATA_DIR = os.path.abspath(os.path.join(
     os.path.dirname(__file__), '../../data'))
@@ -31,3 +32,10 @@ def list_model_dir() -> list:
     file_list = [re_ftz.sub('', file)
                  for file in file_list if re_ftz.search(file)]
     return file_list
+
+
+def get_now_timestamp() -> int:
+    ''' 获取当前时间戳 ms '''
+    now = datetime.datetime.now()
+    ts = now.timestamp() * 1000
+    return int(ts)

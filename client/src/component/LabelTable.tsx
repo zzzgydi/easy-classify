@@ -1,9 +1,9 @@
 import { Tag } from "antd";
 import React, { useEffect, useState } from "react";
-import { apiGetLabel } from "../service/dataset";
+import labeldataApi from "@/service/labeldata";
 
 interface LabelTableProps {
-  name: string;
+  datasetId: number;
   force: any;
 }
 
@@ -18,16 +18,16 @@ const COLORS = [
 ];
 
 const LabelTable: React.FC<LabelTableProps> = (props) => {
-  const { name, force } = props;
+  const { datasetId, force } = props;
 
   const [labels, setLabels] = useState<[string, number][]>([]);
 
   useEffect(() => {
-    if (!name) return;
-    apiGetLabel(name).then((res) => {
+    if (!datasetId) return;
+    labeldataApi.labels(datasetId).then((res: any) => {
       setLabels(res.result);
     });
-  }, [name, force]);
+  }, [datasetId, force]);
 
   return (
     <div>

@@ -80,3 +80,18 @@ html {
     @extend %a-box;
   }
 }
+
+.dataset-page {
+  padding: 20px;
+
+  .main-box {
+    padding: 20px;
+    min-height: calc(100vh - 100px);
+    @extend %a-box;
+
+    > header {
+      text-align: right;
+      margin-bottom: 24px;
+    }
+  }
+}

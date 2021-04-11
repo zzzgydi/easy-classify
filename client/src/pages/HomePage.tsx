@@ -1,9 +1,8 @@
 import React, { useEffect } from "react";
 import { Button, Col, Input, message, Row, Select } from "antd";
 import { atom, useAtom } from "jotai";
-import { apiGetModel } from "../service/dataset";
-import { apiApplyModel } from "../service/model";
-import ConsoleTable from "../component/ConsoleTable";
+import { apiApplyModel } from "@/service/model";
+import ConsoleTable from "@/component/ConsoleTable";
 
 const test = `mens ultrasheer: This model may be ok for sedentary types, but I'm active and get around alot in my job - consistently found these stockings rolled up down by my ankles! Not Good!! Solution: go with the standard compression stocking, 20-30, stock #114622. Excellent support, stays up and gives me what I need. Both pair of these also tore as I struggled to pull them up all the time. Good riddance/bad investment!`;
 
@@ -19,9 +18,9 @@ const HomePage: React.FC = () => {
   const [predResults, setPredResults] = useAtom(atomPredResults);
 
   useEffect(() => {
-    apiGetModel().then((res) => {
-      setModels(res.result || []);
-    });
+    // apiGetModel().then((res) => {
+    //   setModels(res.result || []);
+    // });
   }, []);
 
   const onPredict = () => {

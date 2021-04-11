@@ -1,23 +1,26 @@
 import React, { useState } from "react";
-import { Modal, Button, Form, Input, message } from "antd";
-import { apiAddData } from "../service/dataset";
+import { Modal, Button, Form, Input, message, Select } from "antd";
+import { DatasetModel } from "@/service/dataset";
+import labeldataApi from "@/service/labeldata";
 
 interface AppendModalProps {
+  dataset: DatasetModel[];
   onChange?: () => void;
 }
 
 const AppendModal: React.FC<AppendModalProps> = (props) => {
-  const { onChange } = props;
+  const { dataset, onChange } = props;
 
   const [visible, setVisible] = useState(false);
   const [form] = Form.useForm();
 
   const handleOk = async () => {
     const formResult = await form.validateFields();
-    const { name, label, data } = formResult;
+    const { datasetId, label, data } = formResult;
     const datalist = data.split("\n").filter((e: string) => e && e.trim());
 
-    apiAddData(name, label, datalist)
+    labeldataApi
+      .add(datasetId, label, datalist)
       .then(() => {
         onChange?.();
         setVisible(false);
@@ -45,13 +48,17 @@ const AppendModal: React.FC<AppendModalProps> = (props) => {
         <Form form={form} labelCol={{ span: 3 }}>
           <Form.Item
             label="数据集"
-            name="name"
+            name="datasetId"
             rules={[
               { required: true, message: "数据集名称必填" },
               { pattern: /^\S+$/, message: "数据集名称不支持空白字符" },
             ]}
           >
-            <Input placeholder="数据集 支持任意非空白字符" />
+            <Select
+              style={{ width: "100%" }}
+              placeholder="请选择对应的数据集"
+              options={dataset.map((v) => ({ label: v.name, value: v.id }))}
+            />
           </Form.Item>
 
           <Form.Item

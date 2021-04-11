@@ -8,7 +8,7 @@ import random
 import fasttext
 
 from core.utils import get_temp_path, get_model_path
-from core.words import CutByJieba, CutByBlank
+from core.words import CutByJieba
 from core.context import Context
 
 

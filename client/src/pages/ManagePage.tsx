@@ -1,21 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { Row, Col, Select } from "antd";
-import { apiGetDataset } from "../service/dataset";
 import AppendModal from "../component/AppendModal";
 import TrainModal from "../component/TrainModal";
 import LabelTable from "../component/LabelTable";
 import DataTable from "../component/DataTable";
+import datasetApi, { DatasetModel } from "@/service/dataset";
 
 const ManagePage: React.FC = () => {
-  const [dataset, setDataset] = useState<string[]>([]); // 所有任务名
-  const [name, setName] = useState<string>(""); // 当前任务名
+  const [dataset, setDataset] = useState<DatasetModel[]>([]); // 所有数据集
+  const [datasetId, setDatasetId] = useState<number>(); // 当前数据集
   const [force, setForce] = useState<any>({});
 
-  // 更新所有任务名
+  // 更新所有数据集
   const updateKeys = () => {
-    apiGetDataset().then((res) => {
+    datasetApi.list(1, 9999).then((res) => {
       setDataset(res.result);
-      setName((n) => (n ? n : res.result[0] ?? ""));
+      const { id } = res.result[0] || {};
+      setDatasetId((v) => (v != null ? v : id));
     });
   };
 
@@ -25,9 +26,7 @@ const ManagePage: React.FC = () => {
     updateKeys();
   };
 
-  useEffect(() => {
-    updateKeys();
-  }, []);
+  useEffect(() => updateKeys(), []);
 
   return (
     <div className="manage-page">
@@ -35,10 +34,10 @@ const ManagePage: React.FC = () => {
         <Col flex="1 1 150px">
           <span>当前数据集：</span>
           <Select
-            value={name}
-            onChange={(val) => setName(val)}
+            value={datasetId}
+            onChange={(val) => setDatasetId(val)}
             style={{ width: "calc(100% - 85px)", maxWidth: 200 }}
-            options={dataset.map((v) => ({ label: v, value: v }))}
+            options={dataset.map((v) => ({ label: v.name, value: v.id }))}
           />
         </Col>
 
@@ -49,18 +48,18 @@ const ManagePage: React.FC = () => {
         </Col>
 
         <Col>
-          <AppendModal onChange={onAppendChange} />
+          <AppendModal dataset={dataset} onChange={onAppendChange} />
         </Col>
       </Row>
 
-      <div className="label-box">
-        <h2>标签</h2>
-        <LabelTable name={name} force={force} />
-      </div>
-
       <div className="table-box">
-        <h2>数据</h2>
-        <DataTable name={name} force={force} />
+        <h2>数据列表</h2>
+
+        <div style={{ marginBottom: 20 }}>
+          <LabelTable datasetId={datasetId!} force={force} />
+        </div>
+
+        <DataTable datasetId={datasetId!} force={force} />
       </div>
     </div>
   );

@@ -4,8 +4,9 @@ import { ConfigProvider } from "antd";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import zhCN from "antd/lib/locale/zh_CN";
 
-import Home from "./pages/Home";
-import Manage from "./pages/Manage";
+import HomePage from "./pages/HomePage";
+import ManagePage from "./pages/ManagePage";
+import DatasetPage from "./pages/DatasetPage";
 import BaseHeader from "./component/BaseHeader";
 
 import "antd/dist/antd.css";
@@ -20,8 +21,9 @@ function App() {
         <BaseHeader />
 
         <Switch>
-          <Route path="/manage" component={Manage} />
-          <Route path="/" component={Home} />
+          <Route path="/dataset" component={DatasetPage} />
+          <Route path="/manage" component={ManagePage} />
+          <Route path="/" component={HomePage} />
         </Switch>
       </BrowserRouter>
     </ConfigProvider>

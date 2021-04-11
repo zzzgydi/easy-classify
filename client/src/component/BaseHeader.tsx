@@ -5,6 +5,7 @@ const BaseHeader: React.FC = () => {
   return (
     <div className="base-header">
       <Link to="/">Home</Link>
+      <Link to="/dataset">Dataset</Link>
       <Link to="/manage">Manage</Link>
     </div>
   );

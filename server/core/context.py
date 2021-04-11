@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from os import path
+import os
 import sqlite3
+from core.utils import DATA_DIR
 
-DB_PATH = path.abspath(path.join(path.dirname(__file__), '../../data/main.db'))
+DB_NAME = 'main.db'
+DB_PATH = os.path.join(DATA_DIR, DB_NAME)
 IS_LOG = True
 
 
@@ -54,9 +56,3 @@ class Context():
         else:
             self.conn.commit()
         self.conn.close()
-
-
-if __name__ == "__main__":
-    print(DB_PATH)
-    print(path.abspath(path.dirname(__file__)))
-    print(path.abspath(path.join(path.dirname(__file__), '../../data/main.db')))

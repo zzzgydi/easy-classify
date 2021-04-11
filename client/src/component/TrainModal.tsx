@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { Modal, Button, Form, Input, message, Select } from "antd";
+import { DatasetModel } from "@/service/dataset";
 import { apiStartTrain } from "../service/model";
 
 interface TrainModalProps {
-  dataset: string[];
+  dataset: DatasetModel[];
 }
 
 const TrainModal: React.FC<TrainModalProps> = (props) => {
@@ -14,10 +15,10 @@ const TrainModal: React.FC<TrainModalProps> = (props) => {
 
   const handleOk = async () => {
     const formResult = await form.validateFields();
-
-    apiStartTrain(formResult.dataset, formResult.name).then((res) => {
-      console.log(res);
-    });
+    console.log(formResult);
+    // apiStartTrain(formResult.dataset, formResult.name).then((res) => {
+    //   console.log(res);
+    // });
   };
 
   return (
@@ -42,7 +43,7 @@ const TrainModal: React.FC<TrainModalProps> = (props) => {
           >
             <Select
               placeholder="请选择训练的数据集"
-              options={dataset.map((v) => ({ label: v, value: v }))}
+              options={dataset.map((v) => ({ label: v.name, value: v.id }))}
             />
           </Form.Item>
 

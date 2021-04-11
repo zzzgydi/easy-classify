@@ -1,4 +1,5 @@
 import axios from "./index";
+import { formatTime } from "../utils";
 
 interface LabelData {
   id?: string | number;
@@ -7,51 +8,39 @@ interface LabelData {
   key?: string;
 }
 
-// 获取所有数据
-export function apiGetData(
-  name: string,
-  page: number,
-  pagesize: number
-): Promise<any> {
-  return axios
-    .get("/api/data", { params: { name, page, pagesize } })
-    .then((res: any) => {
-      const { code, result, count } = res;
-      if (code !== 200) return Promise.reject(code);
+export interface DatasetModel {
+  id: number;
+  name: string;
+  desc: string;
+  updated: string;
+}
 
-      const results = result.map((result: any[]) => {
-        const [id, label, data] = result;
-        return { id, label, data };
+class DatasetApi {
+  async list(page: number, pagesize: number): Promise<any> {
+    return axios
+      .get("/api/dataset", { params: { page, pagesize } })
+      .then((res: any) => {
+        const result = res.result.map((item: any[]) => ({
+          id: item[0],
+          name: item[1],
+          desc: item[2],
+          updated: formatTime(item[3]),
+        }));
+        return { ...res, result };
       });
-      return { results, count };
-    });
+  }
+
+  async add(name: string, desc: string) {
+    return axios.post("/api/dataset", { name, desc });
+  }
+
+  async remove(id: number) {
+    return axios.delete("/api/dataset", { params: { id } });
+  }
+
+  async update(id: number, name: string, desc: string) {
+    return axios.post("/api/dataset", { id, name, desc });
+  }
 }
 
-// 批量添加数据
-export function apiAddData(
-  name: string,
-  label: string,
-  datalist: string[]
-): Promise<any> {
-  return axios.post("/api/data", { name, label, datalist });
-}
-
-// 删除数据
-export function apiDeleteData(id: string | number): Promise<any> {
-  return axios.delete("/api/data", { params: { id } });
-}
-
-// 获取所有数据集的名称
-export function apiGetDataset(): Promise<any> {
-  return axios.get("/api/dataset");
-}
-
-// 获取数据集的标签
-export function apiGetLabel(name: string): Promise<any> {
-  return axios.get("/api/label", { params: { name } });
-}
-
-// 获取所有模型
-export function apiGetModel(): Promise<any> {
-  return axios.get("/api/model");
-}
+export default new DatasetApi();
