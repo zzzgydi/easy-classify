@@ -6,6 +6,7 @@
 '''
 import os
 import re
+import random
 import datetime
 
 DATA_DIR = os.path.abspath(os.path.join(
@@ -39,3 +40,9 @@ def get_now_timestamp() -> int:
     now = datetime.datetime.now()
     ts = now.timestamp() * 1000
     return int(ts)
+
+
+def get_random_str(k: int) -> str:
+    ''' 获取k位的随机字符串 '''
+    string = '0987654321qwertyuioplkjhgfdsazxcvbnm'
+    return random.choices(string, k=k)
