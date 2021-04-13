@@ -80,7 +80,7 @@ const AppendModal: React.FC<AppendModalProps> = (props) => {
             <Input.TextArea
               rows={5}
               placeholder="换行输入多条数据"
-              style={{ wordWrap: "normal" }}
+              style={{ whiteSpace: "nowrap" }}
             />
           </Form.Item>
         </Form>
