@@ -3,7 +3,7 @@
 from flask import Flask
 
 from service.start import init_server
-from control import ctrl_dataset, ctrl_labeldata, ctrl_traintask
+from control import ctrl_dataset, ctrl_labeldata, ctrl_model
 
 app = Flask(__name__)
 
@@ -29,28 +29,12 @@ app.add_url_rule('/api/data/label', view_func=ctrl_labeldata.api_get_labelinfo,
                  methods=['GET'])
 
 # 训练相关
-app.add_url_rule('/api/train', view_func=ctrl_traintask.api_add_task,
+app.add_url_rule('/api/model', view_func=ctrl_model.api_get_models,
+                 methods=['GET'])
+app.add_url_rule('/api/model/valid', view_func=ctrl_model.api_get_valid_models,
+                 methods=['GET'])
+app.add_url_rule('/api/train', view_func=ctrl_model.api_add_task,
                  methods=['POST'])
-
-# app.add_url_rule('/api/data', view_func=ctl_dataset.api_get_data,
-#                  methods=['GET'])
-# app.add_url_rule('/api/data', view_func=ctl_dataset.api_add_many_data,
-#                  methods=['POST'])
-# app.add_url_rule('/api/data', view_func=ctl_dataset.api_del_data,
-#                  methods=['DELETE'])
-# app.add_url_rule('/api/dataset', view_func=ctl_dataset.api_get_name,
-#                  methods=['GET'])
-# app.add_url_rule('/api/label', view_func=ctl_dataset.api_get_label,
-#                  methods=['GET'])
-# app.add_url_rule('/api/model', view_func=ctl_dataset.api_get_model,
-#                  methods=['GET'])
-
-
-# # 模型相关
-# app.add_url_rule('/api/train', view_func=ctl_model.api_train_model,
-#                  methods=['POST'])
-# app.add_url_rule('/api/apply', view_func=ctl_model.api_apply_model,
-#                  methods=['POST'])
 
 
 if __name__ == '__main__':
