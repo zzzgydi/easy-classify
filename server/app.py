@@ -34,6 +34,8 @@ app.add_url_rule('/api/model', view_func=ctrl_model.api_get_models,
                  methods=['GET'])
 app.add_url_rule('/api/model/valid', view_func=ctrl_model.api_get_valid_models,
                  methods=['GET'])
+app.add_url_rule('/api/model/train', view_func=ctrl_model.api_add_train_task,
+                 methods=['POST'])
 app.add_url_rule('/api/model/apply', view_func=ctrl_model.api_apply_model,
                  methods=['POST'])
 
