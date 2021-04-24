@@ -43,7 +43,6 @@ def run_train_task() -> bool:
         with open(train_path, 'w', encoding='utf8') as fwrite:
             results = [process_line(label, data) for label, data in task_data]
             fwrite.write('\n'.join(results))
-            fwrite.close()
 
         print('[Train Info]: Begin to train task {} [{}] *'.format(id, hash_name))
 
