@@ -79,7 +79,7 @@ def add_train_task(name: str, dataset: int, desc: str) -> bool:
         values (?,?,?,?,?,?,?);
     '''
     now = get_now_timestamp()
-    hash_name = '{}-{}'.format((name, get_random_str(6)))
+    hash_name = '{}-{}'.format(name, get_random_str(6))
     with Context() as ctx:
         if not ctx.exec(sql_get_dataset, (dataset, )):
             return False

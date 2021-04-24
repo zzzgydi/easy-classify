@@ -24,7 +24,7 @@ def run_train_task() -> bool:
         id = int(task.get('id'))
         hash_name = task.get('hash')
 
-        print('[Train Info]: prepare to train task {} [{}]'.format((id, hash_name)))
+        print('[Train Info]: prepare to train task {} [{}]'.format(id, hash_name))
 
         # 确认训练任务 and 获取任务对应的数据
         task_data = curd_model.get_train_data(id)
@@ -43,7 +43,7 @@ def run_train_task() -> bool:
             results = [process_line(label, data) for label, data in task_data]
             fwrite.write('\n'.join(results))
 
-        print('[Train Info]: Begin to train task {} [{}] *'.format((id, hash_name)))
+        print('[Train Info]: Begin to train task {} [{}] *'.format(id, hash_name))
 
         model = fasttext.train_supervised(train_path)
         model.save_model(model_path)
