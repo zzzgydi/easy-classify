@@ -161,7 +161,7 @@ def get_finish_model(id: int) -> dict:
         if not task:
             return None
         id, name, hash, dataset, status, info, desc, \
-            created_time, updated_time = task[0]
+            created_time, updated_time = task
         return {
             'id': id,
             'name': name,
