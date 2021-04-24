@@ -3,6 +3,7 @@ import { useAtom } from "jotai";
 import { Table } from "antd";
 import { ColumnsType } from "antd/lib/table";
 import { modelAtom } from "@/state";
+import { formatTime } from "@/utils";
 
 interface ModelTableProps {}
 
@@ -30,6 +31,7 @@ const ModelTable: React.FC<ModelTableProps> = (props) => {
       dataIndex: "updated_time",
       key: "updated_time",
       width: "170px",
+      render: (time: number) => formatTime(time),
     },
   ];
 

@@ -3,6 +3,7 @@ import { useAtom } from "jotai";
 import { Modal, Table, message } from "antd";
 import { ColumnsType } from "antd/lib/table";
 import { datasetAtom } from "@/state";
+import { formatTime } from "@/utils";
 import datasetApi from "@/service/dataset";
 
 interface DatasetTableProps {}
@@ -51,6 +52,7 @@ const DatasetTable: React.FC<DatasetTableProps> = (props) => {
       dataIndex: "updated_time",
       key: "updated_time",
       width: "170px",
+      render: (time: number) => formatTime(time),
     },
     {
       title: "操作",
