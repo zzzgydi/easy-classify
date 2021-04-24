@@ -15,7 +15,16 @@ def get_dataset(page: int, page_size: int) -> list:
     with Context() as ctx:
         if not ctx.exec(sql_get_dataset, (page_size, offset)):
             return None
-        result = ctx.get_cursor().fetchall()
+        result_tmp = ctx.get_cursor().fetchall()
+        result = []
+        for row in result_tmp:
+            id, name, desc, updated_time = row
+            result.append({
+                'id': id,
+                'name': name,
+                'desc': desc,
+                'updated_time': updated_time
+            })
         if not ctx.exec(sql_count_dataset):
             return None
         count = ctx.get_cursor().fetchone()[0]
