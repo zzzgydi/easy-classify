@@ -13,6 +13,7 @@ status:
  - 0: 未开始
  - 1: 正在训练
  - 2: 已完成
+ - 3: 训练异常
 '''
 
 
@@ -79,7 +80,7 @@ def add_train_task(name: str, dataset: int, desc: str) -> bool:
         values (?,?,?,?,?,?,?);
     '''
     now = get_now_timestamp()
-    hash_name = '{}-{}'.format(name, get_random_str(6))
+    hash_name = get_random_str(12)
     with Context() as ctx:
         if not ctx.exec(sql_get_dataset, (dataset, )):
             return False
@@ -98,7 +99,7 @@ def get_train_task() -> dict:
         if not task:
             return None
         id, name, hash, dataset, status, info, desc, \
-            created_time, updated_time = task[0]
+            created_time, updated_time = task
         return {
             'id': id,
             'name': name,
@@ -140,6 +141,14 @@ def finish_train_task(id: int, info: dict) -> bool:
     info = json.dumps(info)
     with Context() as ctx:
         return ctx.exec(sql_update_status, (info, now, id))
+
+
+# 标记训练异常
+def set_error_train(id: int):
+    sql_error_status = 'update model set status=3, updated_time=? where id=?;'
+    now = get_now_timestamp()
+    with Context() as ctx:
+        return ctx.exec(sql_error_status, (now, id))
 
 
 # 根据id获取已经完成的模型数据

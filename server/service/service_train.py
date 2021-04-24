@@ -16,16 +16,17 @@ from service import curd_model
 
 def run_train_task() -> bool:
     ''' 执行一次训练任务 '''
+
+    task = curd_model.get_train_task()  # 拉取训练任务
+    if not task:
+        return False
+
+    id = int(task.get('id'))
+    hash_name = task.get('hash')
+
+    print('[Train Info]: prepare to train task {} [{}]'.format(id, hash_name))
+
     try:
-        task = curd_model.get_train_task()  # 拉取训练任务
-        if not task:
-            return False
-
-        id = int(task.get('id'))
-        hash_name = task.get('hash')
-
-        print('[Train Info]: prepare to train task {} [{}]'.format(id, hash_name))
-
         # 确认训练任务 and 获取任务对应的数据
         task_data = curd_model.get_train_data(id)
         if not task_data:
@@ -42,6 +43,7 @@ def run_train_task() -> bool:
         with open(train_path, 'w', encoding='utf8') as fwrite:
             results = [process_line(label, data) for label, data in task_data]
             fwrite.write('\n'.join(results))
+            fwrite.close()
 
         print('[Train Info]: Begin to train task {} [{}] *'.format(id, hash_name))
 
@@ -50,7 +52,9 @@ def run_train_task() -> bool:
 
         curd_model.finish_train_task(id, {})
         return True
-    except:
+    except Exception as e:
+        print('[Train Error]:', e)
+        curd_model.set_error_train(id)
         return False
 
 
@@ -59,7 +63,7 @@ def main_train():
     while True:
         print('[Train Info]: Heart beating...')
         run_train_task()
-        time.sleep(20)
+        time.sleep(5)
 
 
 def run_train_process():

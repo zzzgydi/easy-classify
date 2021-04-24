@@ -45,4 +45,4 @@ def get_now_timestamp() -> int:
 def get_random_str(k: int) -> str:
     ''' 获取k位的随机字符串 '''
     string = '0987654321qwertyuioplkjhgfdsazxcvbnm'
-    return random.choices(string, k=k)
+    return ''.join(random.choices(string, k=k))
