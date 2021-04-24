@@ -1,33 +1,15 @@
-import axios from "./index";
-import { formatTime } from "../utils";
-
-interface LabelData {
-  id?: string | number;
-  label: string;
-  data: string;
-  key?: string;
-}
+import axios from "@/utils/axios";
 
 export interface DatasetModel {
   id: number;
   name: string;
   desc: string;
-  updated: string;
+  updated_time: number;
 }
 
 class DatasetApi {
   async list(page: number, pagesize: number): Promise<any> {
-    return axios
-      .get("/api/dataset", { params: { page, pagesize } })
-      .then((res: any) => {
-        const result = res.result.map((item: any[]) => ({
-          id: item[0],
-          name: item[1],
-          desc: item[2],
-          updated: formatTime(item[3]),
-        }));
-        return { ...res, result };
-      });
+    return axios.get("/api/dataset", { params: { page, pagesize } });
   }
 
   async add(name: string, desc: string) {
@@ -39,7 +21,7 @@ class DatasetApi {
   }
 
   async update(id: number, name: string, desc: string) {
-    return axios.post("/api/dataset", { id, name, desc });
+    return axios.post("/api/dataset/update", { id, name, desc });
   }
 }
 

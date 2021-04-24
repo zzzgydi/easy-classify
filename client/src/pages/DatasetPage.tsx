@@ -1,21 +1,26 @@
-import React, { useState } from "react";
-import DatasetModal from "../component/DatasetModal";
-import DatasetTable from "../component/DatasetTable";
-import datasetApi from "../service/dataset";
+import React from "react";
+import { useAtom } from "jotai";
+import { Button, Space } from "antd";
+import { updateDatasetAtom } from "@/state";
+import DatasetModal from "@/component/modal/DatasetModal";
+import DatasetTable from "@/component/table/DatasetTable";
 
 const DatasetPage: React.FC = () => {
-  const [force, setForce] = useState<any>({});
+  const [, updateDataset] = useAtom(updateDatasetAtom);
 
   return (
     <div className="dataset-page">
-      <div className="main-box">
-        <header>
-          <DatasetModal onChange={() => setForce({})} />
-        </header>
+      <div className="header-box">
+        <div className="title">数据集管理</div>
 
-        <main>
-          <DatasetTable force={force} />
-        </main>
+        <Space size="middle">
+          <Button onClick={() => updateDataset(true)}>刷新</Button>
+          <DatasetModal />
+        </Space>
+      </div>
+
+      <div className="main-box">
+        <DatasetTable />
       </div>
     </div>
   );

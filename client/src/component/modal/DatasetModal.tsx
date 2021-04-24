@@ -1,13 +1,13 @@
 import React, { useState } from "react";
+import { useAtom } from "jotai";
 import { Modal, Button, Form, Input, message } from "antd";
-import datasetApi from "../service/dataset";
+import { updateDatasetAtom } from "@/state";
+import datasetApi from "@/service/dataset";
 
-interface DatasetModalProps {
-  onChange?: () => void;
-}
+interface DatasetModalProps {}
 
 const DatasetModal: React.FC<DatasetModalProps> = (props) => {
-  const { onChange } = props;
+  const [, updateDataset] = useAtom(updateDatasetAtom);
 
   const [visible, setVisible] = useState(false);
   const [form] = Form.useForm();
@@ -19,7 +19,7 @@ const DatasetModal: React.FC<DatasetModalProps> = (props) => {
     datasetApi
       .add(name, desc)
       .then(() => {
-        onChange?.();
+        updateDataset(true);
         setVisible(false);
         form.resetFields();
         message.success("添加成功");
@@ -42,7 +42,7 @@ const DatasetModal: React.FC<DatasetModalProps> = (props) => {
         onOk={handleOk}
         onCancel={() => setVisible(false)}
       >
-        <Form form={form} labelCol={{ span: 3 }}>
+        <Form form={form} name="dataset" labelCol={{ span: 3 }}>
           <Form.Item
             label="数据集名称"
             name="name"

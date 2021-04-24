@@ -1,4 +1,4 @@
-import axios from "./index";
+import axios from "@/utils/axios";
 
 export interface LabelDataModel {
   id: number;
@@ -8,18 +8,9 @@ export interface LabelDataModel {
 
 class LabeldataApi {
   async list(datasetId: number, page: number, pagesize: number): Promise<any> {
-    return axios
-      .get("/api/data", {
-        params: { dataset: datasetId, page, pagesize },
-      })
-      .then((res: any) => {
-        const result: LabelDataModel[] = res.result.map((item: any[]) => ({
-          id: item[0],
-          label: item[1],
-          data: item[2],
-        }));
-        return { ...res, result };
-      });
+    return axios.get("/api/data", {
+      params: { dataset: datasetId, page, pagesize },
+    });
   }
 
   async add(datasetId: number, label: string, datalist: string[]) {

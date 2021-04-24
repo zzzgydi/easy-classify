@@ -8,10 +8,11 @@ const DEFAULT_PAGE_SIZE = 10;
 interface DataTableProps {
   datasetId: number;
   force: any;
+  onChange: () => void;
 }
 
 const DataTable: React.FC<DataTableProps> = (props) => {
-  const { datasetId, force } = props;
+  const { datasetId, force, onChange } = props;
 
   const [total, setTotal] = useState<number>(0);
   const [page, setPage] = useState<number>(1);
@@ -38,8 +39,8 @@ const DataTable: React.FC<DataTableProps> = (props) => {
     labeldataApi
       .remove(id)
       .then(() => {
-        updateData(page, pageSize);
         message.success("删除成功");
+        onChange();
       })
       .catch(() => message.error("删除失败"));
   };
@@ -85,8 +86,8 @@ const DataTable: React.FC<DataTableProps> = (props) => {
     <Table
       bordered
       rowKey="id"
-      dataSource={dataSource}
       columns={columns}
+      dataSource={dataSource}
       pagination={pagination as any}
     />
   );

@@ -12,6 +12,26 @@
   }
 }
 
+%header-box {
+  padding: 20px;
+  text-align: right;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  box-sizing: border-box;
+  background-color: #fff;
+  border-radius: 6px;
+  box-shadow: 1px 1px 12px 0 rgba(0, 0, 0, 0.05);
+
+  .title {
+    font-size: 24px;
+    line-height: 32px;
+    color: #909399;
+  }
+}
+
 %scrollbar {
   /* 滚动槽 */
   ::-webkit-scrollbar {
@@ -33,27 +53,6 @@
 
 html {
   @extend %scrollbar;
-}
-
-.manage-page {
-  padding: 20px;
-
-  .operate-box {
-    padding: 20px;
-    @extend %a-box;
-  }
-
-  .label-box {
-    margin-top: 24px;
-    padding: 20px;
-    @extend %a-box;
-  }
-
-  .table-box {
-    margin-top: 24px;
-    padding: 20px 20px 10px;
-    @extend %a-box;
-  }
 }
 
 .home-page {
@@ -81,17 +80,49 @@ html {
   }
 }
 
-.dataset-page {
+.manage-page {
   padding: 20px;
+
+  .operate-box {
+    padding: 20px;
+    @extend %a-box;
+  }
+
+  .label-box {
+    margin-top: 24px;
+    padding: 20px;
+    @extend %a-box;
+  }
+
+  .table-box {
+    margin-top: 24px;
+    padding: 20px 20px 10px;
+    @extend %a-box;
+  }
+}
+
+.model-page {
+  padding: 20px;
+
+  .header-box {
+    @extend %header-box;
+  }
 
   .main-box {
     padding: 20px;
-    min-height: calc(100vh - 100px);
     @extend %a-box;
+  }
+}
 
-    > header {
-      text-align: right;
-      margin-bottom: 24px;
-    }
+.dataset-page {
+  padding: 20px;
+
+  .header-box {
+    @extend %header-box;
+  }
+
+  .main-box {
+    padding: 20px;
+    @extend %a-box;
   }
 }

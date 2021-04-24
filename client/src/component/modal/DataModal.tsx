@@ -1,16 +1,18 @@
 import React, { useState } from "react";
+import { useAtom } from "jotai";
 import { Modal, Button, Form, Input, message, Select } from "antd";
-import { DatasetModel } from "@/service/dataset";
+import { datasetAtom } from "@/state";
 import labeldataApi from "@/service/labeldata";
 
-interface AppendModalProps {
-  dataset: DatasetModel[];
-  onChange?: () => void;
+interface DataModalProps {
+  onChange: () => void;
 }
 
-const AppendModal: React.FC<AppendModalProps> = (props) => {
-  const { dataset, onChange } = props;
+// 新增数据
+const DataModal: React.FC<DataModalProps> = (props) => {
+  const { onChange } = props;
 
+  const [dataset] = useAtom(datasetAtom);
   const [visible, setVisible] = useState(false);
   const [form] = Form.useForm();
 
@@ -22,7 +24,7 @@ const AppendModal: React.FC<AppendModalProps> = (props) => {
     labeldataApi
       .add(datasetId, label, datalist)
       .then(() => {
-        onChange?.();
+        onChange();
         setVisible(false);
         form.resetFields();
         message.success("添加成功");
@@ -45,14 +47,11 @@ const AppendModal: React.FC<AppendModalProps> = (props) => {
         onOk={handleOk}
         onCancel={() => setVisible(false)}
       >
-        <Form form={form} labelCol={{ span: 3 }}>
+        <Form form={form} name="data" labelCol={{ span: 3 }}>
           <Form.Item
             label="数据集"
             name="datasetId"
-            rules={[
-              { required: true, message: "数据集名称必填" },
-              { pattern: /^\S+$/, message: "数据集名称不支持空白字符" },
-            ]}
+            rules={[{ required: true, message: "数据集名称必填" }]}
           >
             <Select
               style={{ width: "100%" }}
@@ -89,4 +88,4 @@ const AppendModal: React.FC<AppendModalProps> = (props) => {
   );
 };
 
-export default AppendModal;
+export default DataModal;
