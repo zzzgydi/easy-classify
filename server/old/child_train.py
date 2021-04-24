@@ -21,7 +21,7 @@ def dump_train_data(path: str, dataset: str):
             raise Exception('context error')
         results = ctx.get_cursor().fetchall()
 
-    cutter = CutByJieba(False)   # 使用分词器
+    cutter = CutByJieba()   # 使用分词器
 
     def process_line(label: str, data: str):
         return '__label__{} {}'.format(label, cutter.cut_words(data))

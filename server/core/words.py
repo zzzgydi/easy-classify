@@ -11,13 +11,11 @@ import jieba
 class CutByJieba:
     ''' 基于jieba分词的分词器 '''
 
-    def __init__(self, enable=True):
-        self.enable = enable
-        if enable:
-            jieba.enable_paddle()
+    def __init__(self):
+        pass
 
     def cut_words(self, line: str) -> str:
-        seg_list = jieba.cut(line, use_paddle=self.enable)
+        seg_list = jieba.cut(line)
         return ' '.join(list(seg_list))
 
 

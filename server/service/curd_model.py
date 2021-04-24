@@ -140,3 +140,27 @@ def finish_train_task(id: int, info: dict) -> bool:
     info = json.dumps(info)
     with Context() as ctx:
         return ctx.exec(sql_update_status, (info, now, id))
+
+
+# 根据id获取已经完成的模型数据
+def get_finish_model(id: int) -> dict:
+    sql_get_model = 'select * from model where id=? and status=2;'
+    with Context() as ctx:
+        if not ctx.exec(sql_get_model, (id, )):
+            return None
+        task = ctx.get_cursor().fetchone()
+        if not task:
+            return None
+        id, name, hash, dataset, status, info, desc, \
+            created_time, updated_time = task[0]
+        return {
+            'id': id,
+            'name': name,
+            'hash': hash,
+            'dataset': dataset,
+            'status': status,
+            'info': info,
+            'desc': desc,
+            'created_time': created_time,
+            'updated_time': updated_time
+        }

@@ -3,6 +3,7 @@
 from flask import Flask
 
 from service.start import init_server
+from service.service_train import run_train_process
 from control import ctrl_dataset, ctrl_labeldata, ctrl_model
 
 app = Flask(__name__)
@@ -33,10 +34,11 @@ app.add_url_rule('/api/model', view_func=ctrl_model.api_get_models,
                  methods=['GET'])
 app.add_url_rule('/api/model/valid', view_func=ctrl_model.api_get_valid_models,
                  methods=['GET'])
-app.add_url_rule('/api/train', view_func=ctrl_model.api_add_task,
+app.add_url_rule('/api/model/apply', view_func=ctrl_model.api_apply_model,
                  methods=['POST'])
 
 
 if __name__ == '__main__':
     init_server()
+    run_train_process()
     app.run(debug=True)

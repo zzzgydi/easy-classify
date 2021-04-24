@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from flask import request, jsonify
-from service import curd_model
+from service import curd_model, service_apply
 
 
 # 获取所有模型
@@ -62,3 +62,16 @@ def api_finish_train_task():
         return jsonify({'code': 400, 'msg': '参数错误'})
     result = curd_model.finish_train_task(int(id), info)
     return jsonify({'code': 200 if result else 500})
+
+
+# 应用模型任务
+def api_apply_model():
+    req_json = request.get_json()
+    id = req_json.get('id')
+    data_list = req_json.get('data', [])
+    k = req_json.get('k', 3)
+
+    if not id:
+        return jsonify({'code': 400, 'msg': '参数错误'})
+    result = service_apply.run_apply(int(id), data_list, k)
+    return jsonify(result)
